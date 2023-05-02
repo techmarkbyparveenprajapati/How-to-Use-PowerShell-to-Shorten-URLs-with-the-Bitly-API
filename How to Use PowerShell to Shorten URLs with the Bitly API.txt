@@ -1,0 +1,17 @@
+# Set the API access token and long URL
+$accessToken = 'YOUR_ACCESS_TOKEN_HERE'
+$longUrl = 'https://www.example.com/long-url'
+
+# Define the API endpoint and request body
+$uri = "https://api-ssl.bitly.com/v4/shorten"
+$body = @{long_url = $longUrl } | ConvertTo-Json
+
+# Make the API call
+$response = Invoke-RestMethod -Uri $uri `  -Method Post `  -Headers @{
+                                 Authorization = "Bearer $accessToken"
+                                 'Content-Type' = 'application/json'
+                             } `
+                             -Body $body
+
+# Output the shortened URL
+$response.link
